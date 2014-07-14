@@ -1,38 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
+﻿using System.Linq;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace FlipViewContextPreview01for80
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class MainPage
     {
         public MainPage()
         {
-            this.InitializeComponent();
+            DataContext = new SampleData();
+            InitializeComponent();
+
+            // TODO testme only
+            WinRTXamlToolkit.Debugging.DC.ShowVisualTree();
         }
 
-        /// <summary>
-        /// Invoked when this page is about to be displayed in a Frame.
-        /// </summary>
-        /// <param name="e">Event data that describes how this page was reached.  The Parameter
-        /// property is typically used to configure the page.</param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        // TODO ListView event handler that keeps selected item in view
+        private void ListViewSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            // TODO: Add event handler implementation here.
+            var listView = sender as ListView;
+            if (listView != null && e != null && e.AddedItems.Count > 0)
+            {
+                listView.ScrollIntoView(e.AddedItems.First());
+            }
         }
     }
 }
